@@ -19,7 +19,7 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
 
   public
   def filter(event)
-    return unless filter?(event)
+    
     @clones.each do |type|
       clone = event.clone
       clone["type"] = type
