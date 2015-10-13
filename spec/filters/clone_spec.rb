@@ -8,7 +8,6 @@ describe LogStash::Filters::Clone do
     config <<-CONFIG
       filter {
         clone {
-          type => "original"
           clones => ["clone", "clone", "clone"]
         }
       }
@@ -32,8 +31,6 @@ describe LogStash::Filters::Clone do
     config <<-CONFIG
       filter {
         clone {
-          type => "nginx-access"
-          tags => ['TESTLOG']
           clones => ["nginx-access-clone1", "nginx-access-clone2"]
           add_tag => ['RABBIT','NO_ES']
           remove_tag => ["TESTLOG"]
@@ -60,7 +57,6 @@ describe LogStash::Filters::Clone do
       reject { subject[2]["tags"] }.include? "TESTLOG"
       insist { subject[2]["tags"] }.include? "RABBIT"
       insist { subject[2]["tags"] }.include? "NO_ES"
-
     end
   end
 
