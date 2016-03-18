@@ -1,3 +1,5 @@
+# 2.0.5
+  - New dependency requirements for logstash-core for the 5.0 release
 ## 2.0.4
  - fixed spec for UTF-8 encoding.
 ## 2.0.2
