@@ -5,6 +5,22 @@ require "logstash/filters/clone"
 
 describe LogStash::Filters::Clone do
 
+  describe "no-config behaviour" do
+    let(:config) { {} }
+    let(:filter) { LogStash::Filters::Clone.new(config) }
+    
+    let(:attrs)  { { } }
+    let(:event)  { LogStash::Event.new(attrs) }
+  
+    before(:each) do
+      filter.register
+    end
+  
+    it "create one exact clone of the event" do
+      expect { |b| filter.filter( event, &b)  }.to yield_control.once
+    end
+  end
+  
   describe "all defaults" do
     type "original"
     config <<-CONFIG
