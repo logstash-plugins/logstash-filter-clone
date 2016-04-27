@@ -20,11 +20,11 @@ describe LogStash::Filters::Clone do
       insist { subject.length } == 4
       subject.each_with_index do |s,i|
         if i == 0 # last one should be 'original'
-          insist { s["type"] } == "original"
+          insist { s.get("type") } == "original"
         else
-          insist { s["type"]} == "clone"
+          insist { s.get("type")} == "clone"
         end
-        insist { s["message"] } == "hello world"
+        insist { s.get("message") } == "hello world"
       end
     end
   end
@@ -44,21 +44,21 @@ describe LogStash::Filters::Clone do
       insist { subject }.is_a? Array
       insist { subject.length } == 3
 
-      insist { subject[0]["type"] } == "nginx-access"
+      insist { subject[0].get("type") } == "nginx-access"
       #Initial event remains unchanged
-      insist { subject[0]["tags"] }.include? "TESTLOG"
-      reject { subject[0]["tags"] }.include? "RABBIT"
-      reject { subject[0]["tags"] }.include? "NO_ES"
+      insist { subject[0].get("tags") }.include? "TESTLOG"
+      reject { subject[0].get("tags") }.include? "RABBIT"
+      reject { subject[0].get("tags") }.include? "NO_ES"
       #All clones go through filter_matched
-      insist { subject[1]["type"] } == "nginx-access-clone1"
-      reject { subject[1]["tags"] }.include? "TESTLOG"
-      insist { subject[1]["tags"] }.include? "RABBIT"
-      insist { subject[1]["tags"] }.include? "NO_ES"
+      insist { subject[1].get("type") } == "nginx-access-clone1"
+      reject { subject[1].get("tags") }.include? "TESTLOG"
+      insist { subject[1].get("tags") }.include? "RABBIT"
+      insist { subject[1].get("tags") }.include? "NO_ES"
 
-      insist { subject[2]["type"] } == "nginx-access-clone2"
-      reject { subject[2]["tags"] }.include? "TESTLOG"
-      insist { subject[2]["tags"] }.include? "RABBIT"
-      insist { subject[2]["tags"] }.include? "NO_ES"
+      insist { subject[2].get("type") } == "nginx-access-clone2"
+      reject { subject[2].get("tags") }.include? "TESTLOG"
+      insist { subject[2].get("tags") }.include? "RABBIT"
+      insist { subject[2].get("tags") }.include? "NO_ES"
     end
   end
 
@@ -73,8 +73,8 @@ describe LogStash::Filters::Clone do
     CONFIG
 
     sample("type" => "bug-1225", "message" => "unused", "number" => 5) do
-      insist { subject[0]["number"] } == 5
-      insist { subject[1]["number"] } == 5
+      insist { subject[0].get("number") } == 5
+      insist { subject[1].get("number") } == 5
     end
   end
 
