@@ -16,7 +16,7 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
   config :clones, :validate => :array, :default => []
   
   # Optional configuration to specify field in which to store the clone type
-  config :clone_type_field, :validate => :string, :default = "type"
+  config :clone_type_field, :validate => :string, :default => "type"
 
   public
   def register
