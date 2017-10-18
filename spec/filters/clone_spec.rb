@@ -29,6 +29,31 @@ describe LogStash::Filters::Clone do
     end
   end
 
+  describe "custom type field" do
+    config <<-CONFIG
+      filter {
+        clone {
+          clones => ["clone", "clone", "clone"]
+          clone_type_field => "custom_field"          
+        }
+      }
+    CONFIG
+
+    sample("message" => "hello world", "type" => "original") do
+      insist { subject }.is_a? Array
+      insist { subject.length } == 4
+      subject.each_with_index do |s,i|
+        if i == 0 # last one should be 'original'
+          insist { s.get("type") } == "original"
+        else
+          insist { s.get("type")} == "original"
+          insist { s.get("custom_field")} == "clone"
+        end
+        insist { s.get("message") } == "hello world"
+      end
+    end
+  end
+
   describe "Complex use" do
     config <<-CONFIG
       filter {
