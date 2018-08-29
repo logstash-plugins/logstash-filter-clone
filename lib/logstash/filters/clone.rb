@@ -17,7 +17,7 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
 
   public
   def register
-    # Nothing to do
+    logger.warn("The parameter 'clones' is empty, so no clones will be created.") if @clones.empty?
   end
 
   public
