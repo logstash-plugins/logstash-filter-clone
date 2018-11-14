@@ -21,7 +21,7 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 The clone filter is for duplicating events.
-A clone will be created for each type in the clone list.
+A clone will be created for each type defined in the "clones" list.
 The original event is left unchanged.
 Created events are inserted into the pipeline 
 as normal events and will be processed by the remaining pipeline configuration 
@@ -35,7 +35,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-clones>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-clones>> |<<array,array>>|Yes
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -50,6 +50,7 @@ filter plugins.
   * Default value is `[]`
 
 A new clone will be created with the given type for each type in this list.
+Note: an empty list will produce no output.
 
 
 
