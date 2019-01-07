@@ -62,6 +62,29 @@ describe LogStash::Filters::Clone do
     end
   end
 
+  describe "clone_array_name" do
+    config <<-CONFIG
+      filter {
+        clone {
+          clone_array_name => "clones"
+        }
+      }
+    CONFIG
+
+    sample("type" => "nginx-access", "tags" => ["TESTLOG"], "message" => "hello world", "clones" => ["1","2","3"]) do
+      insist { subject }.is_a? Array
+      insist { subject.length } == 4
+
+      insist { subject[0].get("type") } == "nginx-access"
+      #Initial event remains unchanged
+      insist { subject[0].get("tags") }.include? "TESTLOG"
+      #All clones go through filter_matched
+      insist { subject[1].get("type") } == "1"
+      insist { subject[2].get("type") } == "2"
+      insist { subject[3].get("type") } == "3"
+    end
+  end
+
   describe "Bug LOGSTASH-1225" do
     ### LOGSTASH-1225: Cannot clone events containing numbers.
     config <<-CONFIG
