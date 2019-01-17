@@ -14,6 +14,9 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
 
   # A new clone will be created with the given type for each type in this list.
   config :clones, :validate => :array, :default => []
+  
+  # Optional configuration to specify field in which to store the clone type
+  config :clone_type_field, :validate => :string, :default => "type"
 
   public
   def register
@@ -24,7 +27,7 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
   def filter(event)
     @clones.each do |type|
       clone = event.clone
-      clone.set("type", type)
+      clone.set(@clone_type_field, type)
       filter_matched(clone)
       @logger.debug("Cloned event", :clone => clone, :event => event)
 
