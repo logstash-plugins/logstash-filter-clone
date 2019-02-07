@@ -35,7 +35,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-clones>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-clones>> |<<array,array>>|Yes
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -46,11 +46,13 @@ filter plugins.
 [id="plugins-{type}s-{plugin}-clones"]
 ===== `clones` 
 
+  * This is a required setting.
   * Value type is <<array,array>>
-  * Default value is `[]`
+  * There is no default value for this setting.
 
 A new clone will be created with the given type for each type in this list.
 
+Note: setting an empty array will not create any clones. A warning message is logged.
 
 
 [id="plugins-{type}s-{plugin}-common-options"]
