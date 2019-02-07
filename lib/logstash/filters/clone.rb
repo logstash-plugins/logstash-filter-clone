@@ -13,7 +13,7 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
   config_name "clone"
 
   # A new clone will be created with the given type for each type in this list.
-  config :clones, :validate => :array, :default => []
+  config :clones, :validate => :array, :required => true
 
   public
   def register
