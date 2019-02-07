@@ -1,3 +1,6 @@
+## 4.0.0
+  - Make 'clones' a required option
+
 ## 3.0.6
   - Added a warning when 'clones' is empty since that results in a no-op https://github.com/logstash-plugins/logstash-filter-clone/issues/14
 

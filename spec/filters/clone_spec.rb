@@ -81,16 +81,15 @@ describe LogStash::Filters::Clone do
   describe "#register" do
     context "when clones is an empty array" do
       subject { described_class.new("clones" => []) }
-      it "should log a warning" do
+      it "logs a warning" do
         expect(subject.logger).to receive(:warn)
-        subject.register
+        expect { subject.register }.to_not raise_error
       end
     end
-    context "when clones is not empty" do
-      subject { described_class.new("clones" => ["clone1", "clone2"]) }
-      it "should not log a warning" do
-        expect(subject.logger).to_not receive(:warn)
-        subject.register
+    context "when clones is not set" do
+      subject { described_class.new }
+      it "raises an error" do
+        expect { subject.register }.to raise_error(ArgumentError)
       end
     end
   end
