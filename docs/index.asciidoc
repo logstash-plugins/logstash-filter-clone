@@ -50,13 +50,13 @@ filter plugins.
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
 
-A new clone will be created with the given type for each type in this list.
+A new clone will be created with the given value for each field in this list.
 
 Example:
 [source,ruby]
    filter { 
      clone {
-       clones => { "fieldname" => "value" }
+       clones => { "field" => "value" }
      }
    }
 
