@@ -24,7 +24,7 @@ describe LogStash::Filters::Clone do
       subject.each_with_index do |s,i|
         if i == 0 # last one should be 'original'
           insist { s.get("type") } == "original"
-        else if i = 1
+        elseif i = 1
           insist { s.get("type")} == "clone"
         else
           insist { s.get("clone")} == "clone1"
