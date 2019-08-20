@@ -19,7 +19,7 @@ describe LogStash::Filters::Clone do
     CONFIG
 
     sample("message" => "hello world", "type" => "original") do
-      insist { subject }.is_a? Hash
+      insist { subject }.is_a? Array
       insist { subject.length } == 3
       subject.each_with_index do |s,i|
         if i == 0 # last one should be 'original'
