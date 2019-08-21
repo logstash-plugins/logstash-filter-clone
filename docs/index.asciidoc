@@ -71,6 +71,7 @@ Note: setting an empty array will not create any clones. A warning message is lo
   * Default value is `type`
 
 Specify the field into which `clones` values will be added.
+
 Example:
 [source,ruby]
    filter { 
