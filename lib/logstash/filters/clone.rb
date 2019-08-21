@@ -13,21 +13,21 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
   config_name "clone"
 
   # A new clone will be created with the given type for each type in this list.
-  config :field, :validate => :string, :required => false, :default => "clone"
-  config :values, :validate => :array, :required => true
+  config :field, :validate => :string, :required => false, :default => "type"
+  config :clones, :validate => :array, :required => true
 
   public
   def register
-    logger.warn("The parameter 'clones' is empty, so no clones will be created.") if @values.empty?
+    logger.warn("The parameter 'clones' is empty, so no clones will be created.") if @clones.empty?
   end
 
   public
   def filter(event)
-    @values.each do |value|
+    @clones.each do |value|
       clone = event.clone
       clone.set(field,value)
       filter_matched(clone)
-      @logger.debug? && @logger.debug("Cloned event", :clone => clone, :event => event)
+      @logger.debug("Cloned event", :clone => clone, :event => event)
 
       # Push this new event onto the stack at the LogStash::FilterWorker
       yield clone

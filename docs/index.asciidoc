@@ -21,7 +21,8 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 The clone filter is for duplicating events.
-A clone will be created for each type in the clone list.
+A clone will be created for each value in the clone list.
+By default `clones` values overwrite the `type` field, or you can specify an optional `field`.
 The original event is left unchanged.
 Created events are inserted into the pipeline 
 as normal events and will be processed by the remaining pipeline configuration 
@@ -35,6 +36,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-field>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-clones>> |<<hash,hash>>|Yes
 |=======================================================================
 
@@ -42,6 +44,22 @@ Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options suppo
 filter plugins.
 
 &nbsp;
+
+[id="plugins-{type}s-{plugin}-fields"]
+===== `field`
+
+  * Value type is <<string,string>>
+  * Default value is `type`
+
+Specify the field into which `clones` values will be added.
+Example:
+[source,ruby]
+   filter { 
+     clone {
+       field => "clone"
+       clones => [ "clone1", "clone2" ]
+     }
+   }
 
 [id="plugins-{type}s-{plugin}-clones"]
 ===== `clones` 
@@ -56,7 +74,7 @@ Example:
 [source,ruby]
    filter { 
      clone {
-       clones => { "field" => "value" }
+       clones => [ "clone1", "clone2" ]
      }
    }
 
