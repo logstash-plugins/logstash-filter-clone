@@ -62,6 +62,28 @@ describe LogStash::Filters::Clone do
     end
   end
 
+  describe "Other Field" do
+    config <<-CONFIG
+      filter {
+        clone {
+          field => "clone"
+          clones => ["clone1", "clone2"]
+        }
+      }
+    CONFIG
+
+    sample("message" => "hello world", "type" => "original") do
+      insist { subject }.is_a? Array
+      insist { subject.length } == 3
+      insist { subject[1].get("clone") } == "clone1"
+      insist { subject[2].get("clone") } == "clone2"
+      subject.each do |s|
+        insist { s.get("type") } == "original"
+        insist { s.get("message") } == "hello world"
+      end
+    end
+  end
+
   describe "Bug LOGSTASH-1225" do
     ### LOGSTASH-1225: Cannot clone events containing numbers.
     config <<-CONFIG
