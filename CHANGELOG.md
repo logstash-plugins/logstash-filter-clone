@@ -1,3 +1,6 @@
+## 4.1.0
+  - Add ECS compatibility [#24](https://github.com/logstash-plugins/logstash-filter-clone/pull/24)
+
 ## 4.0.0
   - Make 'clones' a required option
 
