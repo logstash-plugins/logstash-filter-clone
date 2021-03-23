@@ -9,6 +9,10 @@ require "logstash/plugin_mixins/ecs_compatibility_support"
 # Created events are inserted into the pipeline 
 # as normal events and will be processed by the remaining pipeline configuration 
 # starting from the filter that generated them (i.e. this plugin).
+#
+# ECS disabled: set the value of the root-level `type` (undefined in ECS) of each resulting event
+# to one of the values provided in its `clones` directive.
+# ECS enabled: add a `tags` of each resulting event to one of the values provided in its `clones` directive.
 class LogStash::Filters::Clone < LogStash::Filters::Base
   include LogStash::PluginMixins::ECSCompatibilitySupport(:disabled, :v1)
 
