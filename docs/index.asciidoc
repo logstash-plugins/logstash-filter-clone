@@ -56,7 +56,7 @@ filter plugins.
 ** Otherwise, the default value is `disabled`.
 
 Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
-The value of this setting affects the _default_ value of <<plugins-{type}s-{plugin}-syslog_pri_field_name>>.
+The value of this setting affects the _default_ value of `type` and `tags`, see <<plugins-{type}s-{plugin}-clones>>
 
 [id="plugins-{type}s-{plugin}-clones"]
 ===== `clones` 
@@ -64,8 +64,64 @@ The value of this setting affects the _default_ value of <<plugins-{type}s-{plug
   * This is a required setting.
   * Value type is <<array,array>>
   * There is no default value for this setting.
-  * ECS Compatibility disabled: a new clone will be created with the given type in this list.
-  * ECS Compatibility enabled: a new clone will be created with a `tag` of the given type in this list.
+
+ECS Compatibility disabled: a new clone will be created with a `type` of the given type in this list.
+
+ECS Compatibility enabled: a new clone will be created with a `tag` of the given type in this list.
+
+Example:
+[source,ruby]
+    filter {
+      clone {
+        clones => ["sun", "moon"]
+      }
+    }
+
+ECS disabled
+[source,text]
+-----
+{
+      "@version" => "1",
+      "sequence" => 0,
+       "message" => "some messages",
+    "@timestamp" => 2021-03-24T11:20:36.226Z,
+          "type" => "sun",
+          "host" => "example.com"
+}
+{
+      "@version" => "1",
+      "sequence" => 0,
+       "message" => "some messages",
+    "@timestamp" => 2021-03-24T11:20:36.226Z,
+          "type" => "moon",
+          "host" => "example.com"
+}
+-----
+
+ECS enabled
+[source,text]
+-----
+{
+          "tags" => [
+        [0] "sun"
+    ],
+      "sequence" => 0,
+    "@timestamp" => 2021-03-23T20:25:10.042Z,
+       "message" => "some messages",
+      "@version" => "1",
+          "host" => "example.com"
+}
+{
+          "tags" => [
+        [0] "moon"
+    ],
+      "sequence" => 0,
+    "@timestamp" => 2021-03-23T20:25:10.042Z,
+       "message" => "some messages",
+      "@version" => "1",
+          "host" => "example.com"
+}
+-----
 
 Note: setting an empty array will not create any clones. A warning message is logged.
 
