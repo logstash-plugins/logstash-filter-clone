@@ -25,7 +25,7 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
 
   def initialize(*params)
     super
-    @event_enhance_method = method( ecs_select[disabled: :set_event_type, v1: :add_event_tag] )
+    @enhance_clone_type_method = method( ecs_select[disabled: :set_event_type, v1: :add_event_tag] )
   end
 
   def register
@@ -36,7 +36,7 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
   def filter(event)
     @clones.each do |type|
       clone = event.clone
-      @event_enhance_method.(clone, type)
+      @enhance_clone_type_method.(clone, type)
       filter_matched(clone)
       @logger.debug("Cloned event", :clone => clone, :event => event)
 
