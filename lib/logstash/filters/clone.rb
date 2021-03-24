@@ -22,6 +22,12 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
   config :clones, :validate => :array, :required => true
 
   public
+
+  def initialize(*params)
+    super
+    @event_enhance_method = method( ecs_select[disabled: :set_event_type, v1: :add_event_tag] )
+  end
+
   def register
     logger.warn("The parameter 'clones' is empty, so no clones will be created.") if @clones.empty?
   end
@@ -30,7 +36,7 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
   def filter(event)
     @clones.each do |type|
       clone = event.clone
-      ecs_support(clone, type)
+      @event_enhance_method.(clone, type)
       filter_matched(clone)
       @logger.debug("Cloned event", :clone => clone, :event => event)
 
@@ -39,16 +45,16 @@ class LogStash::Filters::Clone < LogStash::Filters::Base
     end
   end
 
-  def ecs_support(clone, clone_type)
-    if ecs_compatibility == :disabled
-      clone.set("type", clone_type)
-    else
-      tags = Array(clone.get("tags"))
-      tags << clone_type
-      clone.set("tags", tags)
-    end
+  def set_event_type(event, type)
+    event.set("type", type)
+    event
+  end
 
-    clone
+  def add_event_tag(event, clone_type)
+    tags = Array(event.get("tags"))
+    tags << clone_type
+    event.set("tags", tags)
+    event
   end
 
 end # class LogStash::Filters::Clone
