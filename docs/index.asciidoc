@@ -50,10 +50,24 @@ filter plugins.
   * This is a required setting.
   * Value type is <<array,array>>
   * There is no default value for this setting.
+  * a new clone will be created with a `type` of the given value in this list when ECS is disabled
+  * a new clone will be created with a `tags` of the given value in this list when ECS is enabled
 
-ECS Compatibility disabled: a new clone will be created with a `type` of the given type in this list.
+Note: setting an empty array will not create any clones. A warning message is logged.
 
-ECS Compatibility enabled: a new clone will be created with a `tag` of the given type in this list.
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is <<string,string>>
+* Supported values are:
+** `disabled`: does not use ECS-compatible field names
+** `v1`: uses fields that are compatible with Elastic Common Schema
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+The value of this setting affects the behavior of the <<plugins-{type}s-{plugin}-clones>>
 
 Example:
 [source,ruby]
@@ -66,6 +80,13 @@ Example:
 ECS disabled
 [source,text]
 -----
+{
+      "@version" => "1",
+      "sequence" => 0,
+       "message" => "Hello World!",
+    "@timestamp" => 2021-03-24T11:20:36.226Z,
+          "host" => "example.com"
+}
 {
       "@version" => "1",
       "sequence" => 0,
@@ -88,6 +109,13 @@ ECS enabled
 [source,text]
 -----
 {
+      "sequence" => 0,
+    "@timestamp" => 2021-03-23T20:25:10.042Z,
+       "message" => "Hello World!",
+      "@version" => "1",
+          "host" => "example.com"
+}
+{
           "tags" => [
         [0] "sun"
     ],
@@ -108,23 +136,6 @@ ECS enabled
           "host" => "example.com"
 }
 -----
-
-Note: setting an empty array will not create any clones. A warning message is logged.
-
-[id="plugins-{type}s-{plugin}-ecs_compatibility"]
-===== `ecs_compatibility`
-
-* Value type is <<string,string>>
-* Supported values are:
-** `disabled`: does not use ECS-compatible field names
-** `v1`: uses fields that are compatible with Elastic Common Schema
-* Default value depends on which version of Logstash is running:
-** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
-** Otherwise, the default value is `disabled`.
-
-Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
-The value of this setting affects the _default_ value of `type` and `tags`, see <<plugins-{type}s-{plugin}-clones>>
-
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
