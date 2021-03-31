@@ -69,6 +69,14 @@ Note: setting an empty array will not create any clones. A warning message is lo
 Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 The value of this setting affects the behavior of the <<plugins-{type}s-{plugin}-clones>>
 
+.Metadata Location by `ecs_compatibility` value
+[cols="<l,<l,e,<e"]
+|=======================================================================
+| disabled | v1 | Availability | Description
+
+| type | tags | Always | a tag of cloned event
+|=======================================================================
+
 Example:
 [source,ruby]
     filter {
