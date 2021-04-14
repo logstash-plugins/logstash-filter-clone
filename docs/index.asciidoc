@@ -29,6 +29,8 @@ starting from the filter that generated them (i.e. this plugin).
 
 ==== Event Metadata and the Elastic Common Schema (ECS)
 This plugin adds a tag to a cloned event.
+By default, the tag is stored in the `type` field.
+When ECS is enabled, the tag is stored in the `tags` array field.
 
 Here’s how ECS compatibility mode affects output.
 [cols="<l,<l,e,<e"]
