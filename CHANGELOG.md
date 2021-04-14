@@ -1,5 +1,6 @@
 ## 4.1.1
-- [Doc] Add ECS mapping table [#25](https://github.com/logstash-plugins/logstash-filter-clone/pull/25)
+  - [Doc] Add ECS mapping table [#25](https://github.com/logstash-plugins/logstash-filter-clone/pull/25)
+  - [DOC] Added note that a new type field is added to the clone [#23](https://github.com/logstash-plugins/logstash-filter-clone/pull/23)
 
 ## 4.1.0
   - Add ECS compatibility [#24](https://github.com/logstash-plugins/logstash-filter-clone/pull/24)
