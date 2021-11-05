@@ -1,5 +1,5 @@
 ## 4.2.0
- - Added support for ECS v8 as alias for ECS v1
+ - Added support for ECS v8 as alias for ECS v1 [#27](https://github.com/logstash-plugins/logstash-filter-clone/pull/27)
 
 ## 4.1.1
   - [Doc] Add ECS mapping table [#25](https://github.com/logstash-plugins/logstash-filter-clone/pull/25)
