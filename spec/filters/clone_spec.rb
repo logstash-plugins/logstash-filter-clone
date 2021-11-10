@@ -6,7 +6,7 @@ require 'logstash/plugin_mixins/ecs_compatibility_support/spec_helper'
 describe LogStash::Filters::Clone do
 
   describe "#filter", :ecs_compatibility_support, :aggregate_failures do
-    ecs_compatibility_matrix(:disabled, :v1) do |ecs_select|
+    ecs_compatibility_matrix(:disabled, :v1, :v8 => :v1) do |ecs_select|
 
       subject { described_class.new(settings) }
       let(:event) { LogStash::Event.new(input) }

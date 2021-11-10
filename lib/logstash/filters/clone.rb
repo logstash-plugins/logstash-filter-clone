@@ -14,7 +14,7 @@ require "logstash/plugin_mixins/ecs_compatibility_support"
 # to one of the values provided in its `clones` directive.
 # ECS enabled: add a `tags` of each resulting event to one of the values provided in its `clones` directive.
 class LogStash::Filters::Clone < LogStash::Filters::Base
-  include LogStash::PluginMixins::ECSCompatibilitySupport(:disabled, :v1)
+  include LogStash::PluginMixins::ECSCompatibilitySupport(:disabled, :v1, :v8 => :v1)
 
   config_name "clone"
 
